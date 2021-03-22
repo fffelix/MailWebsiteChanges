@@ -27,6 +27,13 @@ sites = [
                      ]
          },
 
+         {'name': 'example-404',
+          'ignoredErrors': ['404'],
+          'parsers': [uri(uri='https://github.com/404', contenttype='html'),
+                      css(contentcss='div')
+                     ]
+         },
+
          {'name': 'example-xpath',
           'parsers': [uri(uri='https://example-webpage.com/test', contenttype='html'),
                       xpath(contentxpath='//div[contains(concat(\' \', normalize-space(@class), \' \'), \' package-version-header \')]')

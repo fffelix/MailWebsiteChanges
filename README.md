@@ -25,6 +25,13 @@ sites = [
                      ]
          },
 
+         {'name': 'example-404',
+          'ignoredErrors': ['404'],
+          'parsers': [uri(uri='https://github.com/404', contenttype='html'),
+                      css(contentcss='div')
+                     ]
+         },
+
          {'name': 'example-xpath',
           'parsers': [uri(uri='https://example-webpage.com/test', contenttype='html'),
                       xpath(contentxpath='//div[contains(concat(\' \', normalize-space(@class), \' \'), \' package-version-header \')]')
@@ -47,6 +54,8 @@ sites = [
      name of the entry, used as an identifier when sending email notifications
    * <b>receiver</b> (optional)  
      Overrides global receiver specification.
+   * <b>ignoredErrors</b> (optional)  
+     Suppress warnings for specified error codes.
 
  * parameters for the URL receiver:
 

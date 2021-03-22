@@ -150,15 +150,16 @@ def pollWebsites():
         try:
             contentList = runParsers(site['parsers'])
         except Exception as e:
-            # if something went wrong, notify the user
-            subject = '[' + site['name'] + '] WARNING'
-            print('WARNING: ' + str(e))
-            if config.enableMailNotifications:
-                if config.maxMailsPerSession == -1 or mailsSent < config.maxMailsPerSession:
-                    sendmail(receivers=[receiver], subject=subject, content=str(e), sendAsHtml=False, link=None)
-                    mailsSent = mailsSent + 1
-            if config.enableRSSFeed:
-                feedXML.xpath('//channel')[0].append(genFeedItem(subject, str(e), "", 0))
+            if str(e.status) not in site['ignoredErrors']:
+                # if something went wrong, notify the user
+                subject = '[' + site['name'] + '] WARNING'
+                print('WARNING: ' + str(e))
+                if config.enableMailNotifications:
+                    if config.maxMailsPerSession == -1 or mailsSent < config.maxMailsPerSession:
+                        sendmail(receivers=[receiver], subject=subject, content=str(e), sendAsHtml=False, link=None)
+                        mailsSent = mailsSent + 1
+                if config.enableRSSFeed:
+                    feedXML.xpath('//channel')[0].append(genFeedItem(subject, str(e), "", 0))
             continue
 
         sessionHashes = []
